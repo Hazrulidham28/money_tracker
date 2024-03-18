@@ -16,11 +16,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
+  //fill the data for transaction
   final List<Transaction> transactions = [
     Transaction(
       id: 't1',
       title: 'New shoes',
-      amount: 69.9,
+      amount: 69.99,
       date: DateTime.now(),
     ),
     Transaction(
@@ -50,9 +51,43 @@ class MyHomePage extends StatelessWidget {
               child: Text('Chart!'),
             ),
           ),
-          Card(
-            color: Colors.red,
-            child: Text('List of Tx'),
+          Column(
+            //called map value
+            children: transactions.map((tx) {
+              return Card(
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        tx.amount.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      children: <Widget>[
+                        Text(tx.title),
+                        Text(
+                          tx.date.toString(),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }).toList(),
           ),
         ],
       ),
