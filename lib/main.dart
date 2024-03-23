@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_tracker/transaction.dart';
-import 'package:intl/intl.dart';
+import 'package:money_tracker/widgets/new_transaction.dart';
+import 'package:money_tracker/widgets/transaction_list.dart';
+import 'package:money_tracker/widgets/user_transaction.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,20 +19,12 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   //fill the data for transaction
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
-  ];
+
+  //String titleInput = "";
+  // String amountInput = "";
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   MyHomePage({super.key});
 
   @override
@@ -52,75 +45,7 @@ class MyHomePage extends StatelessWidget {
               child: Text('Chart!'),
             ),
           ),
-          Card(
-            elevation: 5,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: <Widget>[
-                  const TextField(
-                    decoration: InputDecoration(labelText: 'Title'),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(labelText: 'Amount'),
-                  ),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Add transaction'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Column(
-            //called map value
-            children: transactions.map((tx) {
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
-                        ),
-                      ),
-                      padding: const EdgeInsets.all(10),
-                      child: Text(
-                        //put back slash to add dollar sign by using string interpolation
-                        '\$${tx.amount}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      //move the element in the column to the left or start
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          tx.title,
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          DateFormat.yMMMd().format(tx.date),
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+          UserTransactions()
         ],
       ),
     );
