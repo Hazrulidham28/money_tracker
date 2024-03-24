@@ -19,6 +19,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         fontFamily: 'Quicksand',
       ),
+      //remove debug banner
+      debugShowCheckedModeBanner: false,
     );
   }
 }
