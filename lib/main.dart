@@ -13,7 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Personal Expenses',
       home: MyHomePage(),
-      theme: ThemeData(primarySwatch: Colors.purple),
+      //to set the primary theme of the application
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+        fontFamily: 'Quicksand',
+      ),
     );
   }
 }
@@ -29,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //fill the data for transaction
 
   final List<Transaction> _userTransactions = [
-    Transaction(
+    /* Transaction(
       id: 't1',
       title: 'New shoes',
       amount: 69.99,
@@ -40,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: 'Groceries',
       amount: 16.53,
       date: DateTime.now(),
-    ),
+    ), */
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
