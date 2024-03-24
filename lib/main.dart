@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/widgets/new_transaction.dart';
 import 'package:money_tracker/widgets/transaction_list.dart';
-import 'package:money_tracker/widgets/user_transaction.dart';
+import './models/transaction.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,32 +11,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Personal Expenses',
       home: MyHomePage(),
+      theme: ThemeData(primarySwatch: Colors.purple),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   //fill the data for transaction
 
-  //String titleInput = "";
-  // String amountInput = "";
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final List<Transaction> _userTransactions = [
+    Transaction(
+      id: 't1',
+      title: 'New shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Groceries',
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
+  ];
 
-  MyHomePage({super.key});
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transaction(
+        title: txTitle,
+        amount: txAmount,
+        date: DateTime.now(),
+        id: DateTime.now().toString());
+
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  //create method to show add transactoin or input area
+  void startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          //pass pointer
+          return GestureDetector(
+            onTap: () {},
+            child: NewTransaction(_addNewTransaction),
+            behavior: HitTestBehavior.opaque,
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter App'),
+        title: const Text('Personal Expenses'),
 
         //add something to appbar
         actions: [
           IconButton(
-            onPressed: (() {}),
+            onPressed: () => startAddNewTransaction(context),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -54,14 +96,14 @@ class MyHomePage extends StatelessWidget {
                 child: Text('Chart!'),
               ),
             ),
-            UserTransactions()
+            TransactionList(_userTransactions)
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => startAddNewTransaction(context),
       ),
     );
   }
