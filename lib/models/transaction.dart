@@ -4,6 +4,7 @@ class Transaction {
   final double amount;
   final DateTime date;
 
+//this is constructor
   Transaction(
       {required this.id,
       required this.title,

@@ -4,10 +4,12 @@ import '../models/transaction.dart'; // Assuming you have a Transaction model de
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
+  //list of transaction
   final List<Transaction> recentTransactions;
-
+  //constructor
   Chart(this.recentTransactions);
 
+  //need further study about how 'get' and 'Map' works
   List<Map<String, Object>> get groupedTransactionValues {
     // Create a list of days starting from today and going back 6 days
     return List.generate(7, (index) {
@@ -24,6 +26,7 @@ class Chart extends StatelessWidget {
           .fold(0.0, (sum, transaction) => sum + transaction.amount);
 
       return {
+        //set the day name by first character using substring
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum,
       };
@@ -47,6 +50,7 @@ class Chart extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
+          //child from left to right
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
             return Flexible(

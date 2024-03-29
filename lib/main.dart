@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal Expenses',
+      //what class to be home
       home: MyHomePage(),
       //to set the primary theme of the application
       theme: ThemeData(
@@ -34,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   //fill the data for transaction
-
   final List<Transaction> _userTransactions = [
     /* Transaction(
       id: 't1',
@@ -50,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ), */
   ];
 
+  //sort the transaction to get latest 7 day transaction
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
       return tx.date.isAfter(
@@ -60,20 +61,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  //to add new transaction into the list
   void _addNewTransaction(String txTitle, double txAmount) {
+    //pass to Transaction class's constructor
     final newTx = Transaction(
         title: txTitle,
         amount: txAmount,
         date: DateTime.now(),
         id: DateTime.now().toString());
-
+    //set the state or apply the state
     setState(() {
       _userTransactions.add(newTx);
     });
   }
 
-  //create method to show add transactoin or input area
+  //create method to show add transaction or input area
   void startAddNewTransaction(BuildContext ctx) {
+    //to hide and display
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
@@ -91,7 +95,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Personal Expenses'),
-
         //add something to appbar
         actions: [
           IconButton(
@@ -100,19 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
+      //make the body scrollable
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
+          //column can has children which can consist multiple child
           children: <Widget>[
             Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
       ),
+      //action buttom
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
+        //any icon or picture
         child: const Icon(Icons.add),
+        //what happent when pressed?
         onPressed: () => startAddNewTransaction(context),
       ),
     );

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatefulWidget {
+  //to pass the function for adding new transactions
   final Function addTx;
 
+  //constructor
   NewTransaction(this.addTx);
 
   @override
@@ -10,10 +12,11 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
+  //to retrieve input from user
   final titleController = TextEditingController();
-
   final amountController = TextEditingController();
 
+  //method to submit the data
   void submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.parse(amountController.text);
@@ -22,7 +25,7 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    //execute addTx()
+    //execute addTx() that in main.dart
     widget.addTx(
       enteredTitle,
       enteredAmount,
@@ -41,6 +44,7 @@ class _NewTransactionState extends State<NewTransaction> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
+              //each text field can has controller to control the text
               controller: titleController,
               //  onChanged: (val) {
               //    titleInput = val;
@@ -62,6 +66,7 @@ class _NewTransactionState extends State<NewTransaction> {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 onPressed: () {
+                  //execute function submitData()
                   submitData();
                 },
                 child: const Text('Add transaction'),
