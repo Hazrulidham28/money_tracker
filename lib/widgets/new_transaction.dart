@@ -73,65 +73,73 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              //each text field can has controller to control the text
-              controller: _titleController,
-              //  onChanged: (val) {
-              //    titleInput = val;
-              //  },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              //why anonymoust function?
-              //just to evade syntax error
-              //this called dumping the value
-              onSubmitted: (_) => _submitData(),
-              // onChanged: (val) {
-              //  amountInput = val;
-              // },
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Expanded(
-                    //wrap text with expanded
-                    //to give space
-                    child: Text(
-                      _selectedDate == null
-                          ? 'No date chosen!' //! indicate the usage of ? on declaration
-                          //use string interpolation to add meaningfull data
-                          : 'Picked dated: ${DateFormat.yMd().format(_selectedDate!)}',
+    //make the input scrollable on keyboard
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                //each text field can has controller to control the text
+                controller: _titleController,
+                //  onChanged: (val) {
+                //    titleInput = val;
+                //  },
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                //why anonymoust function?
+                //just to evade syntax error
+                //this called dumping the value
+                onSubmitted: (_) => _submitData(),
+                // onChanged: (val) {
+                //  amountInput = val;
+                // },
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Expanded(
+                      //wrap text with expanded
+                      //to give space
+                      child: Text(
+                        _selectedDate == null
+                            ? 'No date chosen!' //! indicate the usage of ? on declaration
+                            //use string interpolation to add meaningfull data
+                            : 'Picked dated: ${DateFormat.yMd().format(_selectedDate!)}',
+                      ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: _presentDatePicker,
-                    child: Text('Choose Date',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ],
+                    TextButton(
+                      onPressed: _presentDatePicker,
+                      child: Text('Choose Date',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  //execute function submitData()
-                  _submitData();
-                },
-                child: const Text('Add transaction'),
+              Container(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    //execute function submitData()
+                    _submitData();
+                  },
+                  child: const Text('Add transaction'),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

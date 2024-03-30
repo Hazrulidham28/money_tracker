@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:money_tracker/widgets/chart.dart';
 import 'package:money_tracker/widgets/new_transaction.dart';
 import 'package:money_tracker/widgets/transaction_list.dart';
 import './models/transaction.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  //tell the system to only allows portrait mode
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
