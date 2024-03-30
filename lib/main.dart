@@ -62,16 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   //to add new transaction into the list
-  void _addNewTransaction(String txTitle, double txAmount) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     //pass to Transaction class's constructor
     final newTx = Transaction(
         title: txTitle,
         amount: txAmount,
-        date: DateTime.now(),
+        date: chosenDate,
         id: DateTime.now().toString());
     //set the state or apply the state
     setState(() {
       _userTransactions.add(newTx);
+    });
+  }
+
+  void _deleteTransactions(String id) {
+    setState(() {
+      //.removeWhere is method in list with some condition
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
     });
   }
 
@@ -111,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //column can has children which can consist multiple child
           children: <Widget>[
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransactions),
           ],
         ),
       ),

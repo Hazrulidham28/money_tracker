@@ -7,8 +7,9 @@ import 'package:intl/intl.dart';
 class TransactionList extends StatelessWidget {
   //make the transaction model can be stored in list
   final List<Transaction> transactions;
+  final Function deleteTx;
   //constructor
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class TransactionList extends StatelessWidget {
     //wrap with container and defined it height
     //then wrap with single child scroll view
     return Container(
-      height: 350,
+      height: 450,
       //list view is same as column but it scrollable
       // list view builder is better performance than listview
       child: transactions.isEmpty
@@ -70,6 +71,12 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).colorScheme.error,
+                      //pass id to method delete tx
+                      onPressed: () => deleteTx(transactions[index].id),
                     ),
                   ),
                 );
