@@ -16,8 +16,13 @@ class TransactionList extends StatelessWidget {
     //to make it scrollable on the list
     //wrap with container and defined it height
     //then wrap with single child scroll view
+
+    //can remove container if want
     return Container(
-      height: 450,
+      //height: 450,
+      //calculate height dynamically
+      //0.6 means only take 60% if the height
+      //height: MediaQuery.of(context).size.height * 0.6,
       //list view is same as column but it scrollable
       // list view builder is better performance than listview
       child: transactions.isEmpty

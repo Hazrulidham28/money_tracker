@@ -102,17 +102,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //why intialize appbar?
+    //to get its height
+    final appBar = AppBar(
+      title: const Text('Personal Expenses'),
+      //add something to appbar
+      actions: [
+        IconButton(
+          onPressed: () => startAddNewTransaction(context),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal Expenses'),
-        //add something to appbar
-        actions: [
-          IconButton(
-            onPressed: () => startAddNewTransaction(context),
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       //make the body scrollable
       body: SingleChildScrollView(
         child: Column(
@@ -120,8 +123,20 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           //column can has children which can consist multiple child
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _deleteTransactions),
+            Container(
+              //to make the chart takes 40% of the screen with appbar and status bar which are padding top excluded
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.4,
+              child: Chart(_recentTransactions),
+            ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: TransactionList(_userTransactions, _deleteTransactions)),
           ],
         ),
       ),
